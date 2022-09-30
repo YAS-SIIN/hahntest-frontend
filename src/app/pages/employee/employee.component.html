@@ -1,0 +1,79 @@
+
+<br>
+<mat-grid-list cols="5" rowHeight="100px">
+  <mat-grid-tile > 
+  </mat-grid-tile> 
+  <mat-grid-tile > 
+  </mat-grid-tile> 
+  
+  <mat-grid-tile class="text-center">
+    <button mat-raised-button color="primary" *ngIf="pnlFirstPage" (click)="onOpenCreateEditFormPanel()">New</button>
+       
+    <button mat-raised-button class="me-1 btn btn-warning" *ngIf="pnlBackForms" (click)="onBackAll()">Back</button>    
+     <!-- <button mat-raised-button class="me-1 btn btn-success"  (click)="exportExcell()">خروجی اکسل</button>     -->
+  </mat-grid-tile>
+</mat-grid-list>
+<br>
+
+<div id="pnlData" *ngIf="pnlFirstPage">
+ 
+  <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon>list_alt</mat-icon> Data {{title}} 
+        </mat-panel-title> 
+      </mat-expansion-panel-header>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input> 
+      </mat-form-field>
+      <table mat-table class="mat-elevation-z8" matSort matSortActive="empoloyeeNo" matSortDisableClear matSortDirection="desc" [dataSource]="dataList" >
+          <ng-container matColumnDef="name">
+              <th  mat-header-cell *matHeaderCellDef> نام </th>
+              <td mat-cell *matCellDef="let datarow"> {{datarow.firstName}} {{datarow.lastName}} </td>
+          </ng-container>  
+          <ng-container matColumnDef="empoloyeeNo">
+              <th mat-header-cell  *matHeaderCellDef> کد پرسنلی </th>
+              <td mat-cell *matCellDef="let datarow"> {{datarow.empoloyeeNo}} </td>
+          </ng-container>   
+          <ng-container matColumnDef="status">
+              <th  mat-header-cell *matHeaderCellDef> وضعیت </th>
+              <td mat-cell *matCellDef="let datarow"> {{_sharedService.baseStatus[datarow.status]}} </td>
+          </ng-container>    
+          <ng-container matColumnDef="description">
+              <th  mat-header-cell *matHeaderCellDef> شرح </th>
+              <td mat-cell *matCellDef="let datarow"> {{datarow.description}} </td>
+          </ng-container>   
+          <ng-container  matColumnDef="actions">
+            <th  mat-header-cell *matHeaderCellDef> عملیات </th>
+            <td mat-cell *matCellDef="let datarow">
+              <button mat-icon-button color="warn" (click)="onDelete(datarow)" *ngIf="datarow.status == 0" aria-label="Example icon-button with a delete icon">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button mat-icon-button (click)="onEdit(datarow)" *ngIf="datarow.status == 0" aria-label="Example icon-button with a edit icon">
+                <mat-icon>edit</mat-icon>
+              </button> 
+              <button mat-icon-button (click)="onDetail(datarow)" aria-label="Example icon-button with a edit icon">
+                <mat-icon>assignment</mat-icon>
+              </button> 
+              <button mat-icon-button (click)="onConfirm(datarow)" *ngIf="datarow.status == 0" aria-label="Example icon-button with a edit icon">
+                <mat-icon class="text text-success">check</mat-icon>
+              </button> 
+            </td>
+  
+          </ng-container>   
+         
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          
+      </table>
+      <!-- <mat-paginator [length]="paytotalCount" [pageSize]="paginationService.pageSize" [pageSizeOptions]="paginationService.selectItemsPerPage"
+          (page)="payonPageSwitch.emit($event)">
+      </mat-paginator> -->
+  
+  </mat-expansion-panel>
+
+</div>
+
+<app-employees-employee-register-panel *ngIf="pnlCreateEditForm" [Model]="NewEditRowModel" (submitClicked)="onSubmit($event)" [showRegisterButton]="showRegisterButton"></app-employees-employee-register-panel>

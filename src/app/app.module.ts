@@ -37,6 +37,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MainComponent } from './pages/main/main.component';  
 import { ValidationMessageComponent } from './pages/others/validation-message/validation-message.component';
 import { ConfirmDialogComponent } from './pages/others/confirm-dialog/confirm-dialog.component'; 
+import { EmployeeComponent } from './pages/employee/employee.component';
+import { EmployeeRegisterPanelComponent } from './pages/employee/employee-register-panel/employee-register-panel.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import { ConfirmDialogComponent } from './pages/others/confirm-dialog/confirm-di
     ValidationMessageComponent,
     
     ConfirmDialogComponent,  
+    EmployeeComponent,
+    EmployeeRegisterPanelComponent
   ],
   imports: [
     BrowserModule,
