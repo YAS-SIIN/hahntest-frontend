@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, NgForm } from '@angular/forms';  
-import { EmployeeModelData, EmployeeResponseModel } from 'src/app/models/employee/employee-model';
+import { EmployeeModelData } from 'src/app/models/employee/employee-model';
 
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';

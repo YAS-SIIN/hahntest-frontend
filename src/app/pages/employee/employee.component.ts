@@ -1,7 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { FormBuilder, NgForm } from '@angular/forms'; 
 import { SharedService } from '../../services/shared/shared.service';
-import { EmployeeModelData, EmployeeResponseModel } from 'src/app/models/employee/employee-model';
+import { EmployeeModelData } from 'src/app/models/employee/employee-model';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../others/confirm-dialog/confirm-dialog.component';
@@ -26,9 +26,8 @@ export class EmployeeComponent implements OnInit {
   pnlCreateEditForm = false;    
   showRegisterButton = true; 
  
-  displayedColumns: string[] = ['name', 'empoloyeeNo', 'status', 'description', 'actions'];
-  NewEditRowModel: EmployeeModelData = new EmployeeModelData; 
-  dataListExcell: EmployeeModelData[] = []; 
+  displayedColumns: string[] = ['name', 'sureName', 'actions'];
+  NewEditRowModel: EmployeeModelData = new EmployeeModelData;  
   dataList:MatTableDataSource<EmployeeModelData>=new MatTableDataSource<EmployeeModelData>;
 
   constructor(private formBuilder: FormBuilder, sharedService: SharedService, employeeService: EmployeeService, dialog: MatDialog) {
@@ -39,6 +38,7 @@ export class EmployeeComponent implements OnInit {
  
  
   ngOnInit(): void { 
+    debugger
    this.getGridList();
    
   }
@@ -46,12 +46,11 @@ export class EmployeeComponent implements OnInit {
   getGridList() {  
   
       this._employeeService.GetAllData().subscribe(
-        (data: EmployeeResponseModel) => { 
-          this.dataList = new MatTableDataSource(data.data)
-          this.dataListExcell = data.data
+        (data: EmployeeModelData[]) => { 
+          this.dataList = new MatTableDataSource(data) 
         },
         (responseError: HttpErrorResponse) => { 
-          this._sharedService.toastError('Error' + ' | ' + responseError.error.error.error_description, `Error Code ${responseError.error.error.error_code}`);      
+          this._sharedService.toastError('Error' + ' | ' + responseError.error, `Error Code ${responseError.error.error.error_code}`);      
         });
   }
 
@@ -88,46 +87,24 @@ export class EmployeeComponent implements OnInit {
   onDelete(SelectedRow: EmployeeModelData){
     const dialogRef = this._dialog.open(ConfirmDialogComponent, {
       width: '15vw',
-      data: { message: "آیا مطمئن هستید ؟" }
+      data: { message: "Are you sure ?" }
     });
     dialogRef.afterClosed().subscribe(result => { 
       if (result == undefined)
         return;
 
         this._employeeService.Delete(SelectedRow.id).subscribe(
-          (data: EmployeeResponseModel) => {
+          (data: EmployeeModelData) => {
      
             this._sharedService.toastSuccess('Done');
             this.getGridList();
           },
           (responseError: HttpErrorResponse) => { 
-            this._sharedService.toastError('Error' + ' | ' + responseError.error.error.error_description, `Error Code ${responseError.error.error.error_code}`);
+            this._sharedService.toastError('Error' + ' | ' + responseError.error, `Error Code ${responseError.error.error.error_code}`);
           });
     });  
   }
-  
-  onConfirm(SelectedRow: EmployeeModelData){
-    const dialogRef = this._dialog.open(ConfirmDialogComponent, {
-      width: '15vw',
-      data: { message: "Are you sure?" }
-    });
-    
-    dialogRef.afterClosed().subscribe(result => { 
-      if (result == undefined)
-        return;
-
-        this._employeeService.Confirm(SelectedRow.id).subscribe(
-          (data: EmployeeResponseModel) => { 
-            this._sharedService.toastSuccess('Done');
-            this.getGridList();
-          },
-          (responseError: HttpErrorResponse) => { 
-            this._sharedService.toastError('Error' + ' | ' + responseError.error.error.error_description, `Error Code ${responseError.error.error.error_code}`);
-          });
-    });   
-     
-  }
-  
+   
   onCreateEditElements(SelectedRow: EmployeeModelData){
     this.pnlFirstPage = false;
     this.pnlBackForms = true;
@@ -136,25 +113,12 @@ export class EmployeeComponent implements OnInit {
   }
   
  
-  onSubmit(form: NgForm) {
-    debugger
-    this.NewEditRowModel.imaghePath = '';
-    let formData = new FormData();
-    if (form.controls['imaghePath'].value != undefined) {
-      let fileToUpload = <File>form.controls['imaghePath'].value;
-      formData.append('File', fileToUpload);
-      this.NewEditRowModel.imaghePath = fileToUpload.name;
-    }
-    
-    this.NewEditRowModel.mobileNo = '0' +  this.NewEditRowModel.mobileNo;
-   
-    formData.append('EMPEmployee', JSON.stringify(this.NewEditRowModel));
-
-    if (this.SaveMode == 'New') {
-      this.NewEditRowModel.leaveDate = '';
+  onSubmit(form: NgForm) {  
+      
+    if (this.SaveMode == 'New') { 
  
-     this._employeeService.Insert(formData).subscribe(
-      (data: EmployeeResponseModel) => {
+     this._employeeService.Insert(this.NewEditRowModel).subscribe(
+      (data: EmployeeModelData) => {
 
         this.onBackAll();
         this.SaveMode = 'New';
@@ -168,8 +132,8 @@ export class EmployeeComponent implements OnInit {
       });
       // this.FormList.push(this.NewEditRowModel); 
     } else if (this.SaveMode == 'Edit') { 
-      this._employeeService.Update(formData).subscribe(
-        (data: EmployeeResponseModel) => {
+      this._employeeService.Update(this.NewEditRowModel).subscribe(
+        (data: EmployeeModelData) => {
   
           this.onBackAll();
           this.SaveMode = 'New';

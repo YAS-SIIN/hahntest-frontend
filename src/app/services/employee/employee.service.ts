@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiPath } from 'src/app/apiPath';
-import { EmployeeModelData, EmployeeResponseModel } from 'src/app/models/employee/employee-model';
+import { EmployeeModelData } from 'src/app/models/employee/employee-model';
 import { environment } from '../../../environments/environment'; 
 
 
@@ -20,45 +20,36 @@ export class EmployeeService {
 
   GetAllData() {
      
-    let url = `${this._controllerPath}/Get`;
+    let url = `${this._controllerPath}`;
 
-    return this._http.post<EmployeeResponseModel>(url, {}, {
+    return this._http.get<EmployeeModelData[]>(url, {
      
     });
   }
 
-  Insert(data:FormData) {
+  Insert(data:EmployeeModelData) {
      
-    let url = `${this._controllerPath}/Insert`;
+    let url = `${this._controllerPath}`;
 
-    return this._http.post<EmployeeResponseModel>(url, data, { 
+    return this._http.post<EmployeeModelData>(url, data, { 
     });
   }
 
   
-  Update(data:FormData) {
+  Update(data:EmployeeModelData) {
      
-    let url = `${this._controllerPath}/Update`;
+    let url = `${this._controllerPath}`;
 
-    return this._http.put<EmployeeResponseModel>(url, data, {
+    return this._http.put<EmployeeModelData>(url, data, {
      
     });
   }
 
-  Confirm(Id: number) {
-     
-    let url = `${this._controllerPath}/Confirm?Id=${Id}`;
-
-    return this._http.put<EmployeeResponseModel>(url, {Id: Id}, {
-     
-    });
-  }
- 
   Delete(Id: number) {
      
-    let url = `${this._controllerPath}/Delete?Id=${Id}`;
+    let url = `${this._controllerPath}?Id=${Id}`;
 
-    return this._http.delete<EmployeeResponseModel>(url,  {
+    return this._http.delete<EmployeeModelData>(url,  {
      
     });
   }

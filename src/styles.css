@@ -22,11 +22,7 @@ mat-form-field {
 mat-expansion-panel {
     margin: 1px !important;
 }
-
-.ltrInput {
-    direction: ltr !important;
-    text-align: left !important;
-}
+ 
 
 .mat-expansion-panel-body {
     padding: 10px 24px 16px !important;

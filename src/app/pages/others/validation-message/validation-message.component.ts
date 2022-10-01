@@ -15,47 +15,47 @@ export class ValidationMessageComponent implements OnInit {
   get message(): string {
     
     return this.control?.hasError('required')
-      ? `${this.fieldDisplayName} را وارد نمائید.`
+      ? `${this.fieldDisplayName} is required.`
       : this.control?.hasError('pattern')
-      ? `${this.fieldDisplayName} را به شکل صحیح وارد نمائید.`
+      ? `${this.fieldDisplayName} format is not correct.`
       : this.control?.hasError('email')
-      ? `${this.fieldDisplayName} را به شکل صحیح وارد نمائید.`
+      ? `${this.fieldDisplayName} format is not correct.`
       : this.control?.hasError('minlength')
-      ? `${this.fieldDisplayName} باید بیشتر از  ${
+      ? `${this.fieldDisplayName} should be more than ${
           this.control?.errors?.['minlength'].required
-        } کاراکتر باشد.`
+        } character.`
       : this.control?.hasError('maxlength')
-      ? `${this.fieldDisplayName} باید کمتر از  ${
+      ? `${this.fieldDisplayName} should be less than ${
           this.control?.errors?.['maxlength'].requiredLength
-        } کاراکتر باشد.`
+        } character. `
       : this.control?.hasError('min')
-      ? `${this.fieldDisplayName} باید بیشتر از  ${
+      ? `${this.fieldDisplayName} should be more than ${
           this.control?.errors?.['min'].requiredLength
-        } باشد.`
+        } character.`
       : this.control?.hasError('max')
-      ? `${this.fieldDisplayName} باید کمتر از  ${
+      ? `${this.fieldDisplayName} should be less than ${
           this.control?.errors?.['max'].requiredLength
-        } باشد.`
+        } character.`
       : this.hasRule()
       ? this.findRule()
       : this.control?.hasError('model')
       ? `${this.control?.errors?.['model'].messages[0]}`
       : this.control?.errors?.['modelStateError'].error[0].includes('required')
-      ? `${this.fieldDisplayName} را وارد نمائید.`
+      ? `${this.fieldDisplayName} is required`
       : this.control?.errors?.['modelStateError'].error[0].includes('pattern')
-      ? `${this.fieldDisplayName} را به شکل صحیح وارد نمائید.`
+      ? `${this.fieldDisplayName} format is not correct.`
       : this.control?.errors?.['modelStateError'].error[0].includes('email')
-      ? `${this.fieldDisplayName} را به شکل صحیح وارد نمائید.`
+      ? `${this.fieldDisplayName} format is not correct.`
       : this.control?.errors?.['modelStateError'].error[0].includes('minlength')
-      ? `مقدار وارد شده کمتر از حد مجاز است`
+      ? `The value entered is less than the limit`
       : this.control?.errors?.['modelStateError'].error[0].includes('maxlength')
-      ? `مقدار وارد شده بیشتر از حد مجاز است`
+      ? `The value entered is more than the limit`
       : this.control?.errors?.['modelStateError'].error[0].includes('min')
-      ? `مقدار وارد شده کمتر از حد مجاز است`
+      ? `The value entered is less than the limit`
       : this.control?.errors?.['modelStateError'].error[0].includes('max')
-      ? `مقدار وارد شده بیشتر از حد مجاز است`
+      ? `The value entered is more than the limit`
       : this.control?.errors?.['modelStateError'].error[0].includes('regular expression')
-      ? `فرمت مقدار وارد شده مجاز نیست`
+      ? `format is not correct.`
       : this.control?.errors?.['modelStateError'].error[0].includes('model')
       ? `${this.control?.errors?.['model'].error[0]}`
       : '';

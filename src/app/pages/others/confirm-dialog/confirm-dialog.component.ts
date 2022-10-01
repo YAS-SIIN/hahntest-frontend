@@ -12,7 +12,7 @@ export interface ConformDialogData {
   styles: [`
     .mat-dialog-content {
       overflow: hidden !important;
-      direction: rtl;
+      direction: ltr;
     }
   `]
 })

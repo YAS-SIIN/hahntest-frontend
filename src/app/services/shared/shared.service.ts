@@ -2,41 +2,15 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { ApiPath } from 'src/app/apiPath';
-import { environment } from 'src/environments/environment';
- 
+import { ToastrService } from 'ngx-toastr'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
 
-  private _controllerPath: string = `${environment.baseUrl}${ApiPath.Main}`;
-  
-  public dateNow: string='1111/11/11';
-
-  //Masks :
-  public dateMask= [/\d/, /\d/,/\d/,/\d/, '/', /\d/, /\d/, '/', /\d/, /\d/];
-  public timeMask= [/\d/, ':', /[0-5]/, /\d/];
-  public mobileNumberMask = [/[0]/, /[0-9]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/];
-  public yearMask = [/[1-4]/,/\d/,/\d/,/\d/];
-
-  //Paterns :
-  public datePatern = "[1-4]\d{3}\/((0[1-6]\/((3[0-1])|([1-2][0-9])|(0[1-9])))|((1[0-2]|(0[7-9]))\/(30|31|([1-2][0-9])|(0[1-9]))))";
-  public mobilePatern = "[0-9]{3}[0-9]{3}[0-9]{4}"; 
-  //public passwordPatern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,}$  (?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}";
-  //Enums :
-  public baseStatus: string[] =    ['غیرفعال', 'تایید شده', '', 'حذف شده'];
-  public cartableStatus: string[] =    ['غیرفعال', 'تایید شده', 'همه'];
-  public leaveTypeList: string[] = [ 'استحقاقی', 'استعلاجی', 'بدون حقوق'];
-  public requestLeaveTypeList: string[] = [ 'روزانه', 'ساعتی' ];
-  
-  private _http: HttpClient;
-
-
-  constructor(private toastr : ToastrService, http: HttpClient) {
-    this._http = http;
+      
+  constructor(private toastr : ToastrService ) { 
    }
  
  
@@ -56,18 +30,6 @@ export class SharedService {
     this.toastr.warning(message, title);
   }
 
-
-  GetPersianDate() {  
-    let url = `${this._controllerPath}/GetPersianDate`;
-
-     this._http.post<string>(url, {}, {}).subscribe(
-      (data: string) => { 
-        this.dateNow = data;
-      },
-      (responseError: HttpErrorResponse) => { 
-        this.toastError('خطایی در انجام عملیات رخ داده است' + ' | ' + responseError.error.error.error_description, `کد خطای ${responseError.error.error.error_code}`);      
-      });
-  }
 
 
  //--------------- Errors
@@ -90,12 +52,12 @@ export class SharedService {
             });
           } else {
             // for cross field validations -> show the validation error at the top of the screen
-            this.toastError('خطایی در انجام عملیات رخ داده است' + ' | ' + modelStateErrors.error.error_description, `کد خطای ${modelStateErrors.error.error_code}`);
+            this.toastError('Error' + ' | ' + modelStateErrors.error.error_description, `Error Code ${modelStateErrors.error.error_code}`);
           }
         }
       }
     } else {
-      this.toastError('خطایی در انجام عملیات رخ داده است.');
+      this.toastError('Error');
     }
   }
 

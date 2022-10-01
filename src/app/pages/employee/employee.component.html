@@ -1,5 +1,5 @@
+ 
 
-<br>
 <mat-grid-list cols="5" rowHeight="100px">
   <mat-grid-tile > 
   </mat-grid-tile> 
@@ -10,7 +10,6 @@
     <button mat-raised-button color="primary" *ngIf="pnlFirstPage" (click)="onOpenCreateEditFormPanel()">New</button>
        
     <button mat-raised-button class="me-1 btn btn-warning" *ngIf="pnlBackForms" (click)="onBackAll()">Back</button>    
-     <!-- <button mat-raised-button class="me-1 btn btn-success"  (click)="exportExcell()">خروجی اکسل</button>     -->
   </mat-grid-tile>
 </mat-grid-list>
 <br>
@@ -28,38 +27,27 @@
         <mat-label>Search</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input> 
       </mat-form-field>
-      <table mat-table class="mat-elevation-z8" matSort matSortActive="empoloyeeNo" matSortDisableClear matSortDirection="desc" [dataSource]="dataList" >
+      <table mat-table class="mat-elevation-z8" matSort matSortActive="name" matSortDisableClear matSortDirection="desc" [dataSource]="dataList" >
           <ng-container matColumnDef="name">
-              <th  mat-header-cell *matHeaderCellDef> نام </th>
-              <td mat-cell *matCellDef="let datarow"> {{datarow.firstName}} {{datarow.lastName}} </td>
+              <th  mat-header-cell *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let datarow"> {{datarow.name}} </td>
           </ng-container>  
-          <ng-container matColumnDef="empoloyeeNo">
-              <th mat-header-cell  *matHeaderCellDef> کد پرسنلی </th>
-              <td mat-cell *matCellDef="let datarow"> {{datarow.empoloyeeNo}} </td>
-          </ng-container>   
-          <ng-container matColumnDef="status">
-              <th  mat-header-cell *matHeaderCellDef> وضعیت </th>
-              <td mat-cell *matCellDef="let datarow"> {{_sharedService.baseStatus[datarow.status]}} </td>
+          <ng-container matColumnDef="sureName">
+              <th mat-header-cell  *matHeaderCellDef> Sure Name </th>
+              <td mat-cell *matCellDef="let datarow"> {{datarow.sureName}} </td>
           </ng-container>    
-          <ng-container matColumnDef="description">
-              <th  mat-header-cell *matHeaderCellDef> شرح </th>
-              <td mat-cell *matCellDef="let datarow"> {{datarow.description}} </td>
-          </ng-container>   
           <ng-container  matColumnDef="actions">
-            <th  mat-header-cell *matHeaderCellDef> عملیات </th>
+            <th  mat-header-cell *matHeaderCellDef> Actions </th>
             <td mat-cell *matCellDef="let datarow">
-              <button mat-icon-button color="warn" (click)="onDelete(datarow)" *ngIf="datarow.status == 0" aria-label="Example icon-button with a delete icon">
+              <button mat-icon-button color="warn" (click)="onDelete(datarow)" aria-label="Example icon-button with a delete icon">
                 <mat-icon>delete</mat-icon>
               </button>
-              <button mat-icon-button (click)="onEdit(datarow)" *ngIf="datarow.status == 0" aria-label="Example icon-button with a edit icon">
+              <button mat-icon-button (click)="onEdit(datarow)" aria-label="Example icon-button with a edit icon">
                 <mat-icon>edit</mat-icon>
               </button> 
               <button mat-icon-button (click)="onDetail(datarow)" aria-label="Example icon-button with a edit icon">
                 <mat-icon>assignment</mat-icon>
-              </button> 
-              <button mat-icon-button (click)="onConfirm(datarow)" *ngIf="datarow.status == 0" aria-label="Example icon-button with a edit icon">
-                <mat-icon class="text text-success">check</mat-icon>
-              </button> 
+              </button>  
             </td>
   
           </ng-container>   

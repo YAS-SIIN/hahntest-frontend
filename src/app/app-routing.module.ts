@@ -6,11 +6,11 @@ import { MainComponent } from './pages/main/main.component';
 
 
 const routes: Routes = [ 
-  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: 'employee', pathMatch: 'full' },
   {
-    path: '', component: EmployeeComponent, 
-    children: [
-      { path: 'dashboard', component: DashboardComponent, pathMatch: 'full' },   
+    path: '', component: MainComponent, 
+    children: [ 
+      { path: 'employee', component: EmployeeComponent, pathMatch: 'full' }, 
     ]
   }, 
 ];
