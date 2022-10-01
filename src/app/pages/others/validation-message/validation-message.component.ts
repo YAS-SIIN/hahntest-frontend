@@ -13,7 +13,7 @@ export class ValidationMessageComponent implements OnInit {
   @Input() rules: { [key: string]: string; } = {"" : ""};
 
   get message(): string {
-    
+    debugger
     return this.control?.hasError('required')
       ? `${this.fieldDisplayName} is required.`
       : this.control?.hasError('pattern')
@@ -58,7 +58,7 @@ export class ValidationMessageComponent implements OnInit {
       ? `format is not correct.`
       : this.control?.errors?.['modelStateError'].error[0].includes('model')
       ? `${this.control?.errors?.['model'].error[0]}`
-      : '';
+      : this.control?.errors?.['modelStateError'].error;
   }
   constructor() {}
 

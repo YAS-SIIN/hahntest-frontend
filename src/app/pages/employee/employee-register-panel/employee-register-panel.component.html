@@ -33,10 +33,10 @@
    
       <div Class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
         <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>National Code</mat-label>
-          <input matInput [(ngModel)]="Model.nationalCode" class="ltrInput" pattern="[0-9]{10}" name="nationalCode" #nationalCode="ngModel" required>
+          <mat-label>NationalCode</mat-label>
+          <input matInput [(ngModel)]="Model.nationalCode" maxlength="10" name="nationalCode" #nationalCode="ngModel" >
           <mat-error *ngIf="!form.controls['nationalCode'].valid && form.controls['nationalCode'].touched"class="mat-text-warn">
-            <app-validation-message [control]="form.controls['nationalCode']" fieldDisplayName="National Code"></app-validation-message>
+            <app-validation-message [control]="form.controls['nationalCode']" fieldDisplayName="NationalCode"></app-validation-message>
           </mat-error>
         </mat-form-field>  
       </div>

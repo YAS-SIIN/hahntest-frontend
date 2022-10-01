@@ -114,7 +114,7 @@ export class EmployeeComponent implements OnInit {
   
  
   onSubmit(form: NgForm) {  
-      
+      debugger
     if (this.SaveMode == 'New') { 
  
      this._employeeService.Insert(this.NewEditRowModel).subscribe(
@@ -128,6 +128,7 @@ export class EmployeeComponent implements OnInit {
         this.getGridList();
       },
       (responseError: HttpErrorResponse) => { 
+        debugger
         this._sharedService.processModelStateErrors(form, responseError); 
       });
       // this.FormList.push(this.NewEditRowModel); 

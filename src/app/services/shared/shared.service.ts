@@ -39,11 +39,10 @@ export class SharedService {
     this.errors=[];
 
     if (responseError.status === 400) {
-      const modelStateErrors = responseError.error.error;
-      for (const fieldName in modelStateErrors) {
-        if (modelStateErrors.hasOwnProperty(fieldName)) {
-         
-          const modelStateError = modelStateErrors[fieldName];
+      const modelStateErrors = responseError.error.errors;
+      for (let i=0; i < modelStateErrors.length;  i++) {
+         const fieldName =  modelStateErrors[0].propertyName;
+          const modelStateError = modelStateErrors[0].errorMessage;
           const control = form.controls[fieldName] || form.controls[this.lowerCaseFirstLetter(fieldName)] || form.controls[fieldName.split('.')[1]];
           if (control) {
             // integrate into Angular's validation
@@ -54,7 +53,6 @@ export class SharedService {
             // for cross field validations -> show the validation error at the top of the screen
             this.toastError('Error' + ' | ' + modelStateErrors.error.error_description, `Error Code ${modelStateErrors.error.error_code}`);
           }
-        }
       }
     } else {
       this.toastError('Error');
